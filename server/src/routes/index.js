@@ -1,12 +1,14 @@
-import fs from 'fs';
+import express from 'express';
+import authRoutes from './auth.routes.js';
+import userRoutes from './user.routes.js';
 
-const allModules = {};
+const router = express.Router();
 
-fs.readFileSync(__dirname + '/').forEach(function (file) {
-  if (file.match(/\.js$/) !== null && file !== 'index.js') {
-    const name = file.replace('.routes.js', '') + 'Routes';
-    allModules[name] = require('./' + file);
-  }
-});
+export const initRoutes = (app) => {
+  router.use('/auth', authRoutes);
+  router.use('/user', userRoutes);
 
-export default allModules;
+  app.use('/api', router);
+};
+
+export { authRoutes, userRoutes };

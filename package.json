@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "start": "concurrently \"npm start --prefix server\" \"npm start --prefix client\""
+    "start": "concurrently \"npm start --prefix server\" \"npm start --prefix client\"",
+    "prepare": "husky"
   },
   "author": "",
   "license": "MIT",

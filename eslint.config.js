@@ -9,7 +9,7 @@ const configClient = [
   {
     files: ['client/**/*.{js,jsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       globals: globals.browser,
       parserOptions: {
         ecmaVersion: 'latest',
@@ -41,7 +41,7 @@ const configServer = [
   {
     files: ['server/**/*.js'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
         ...js.configs.recommended.globals,

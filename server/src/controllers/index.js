@@ -1,12 +1,4 @@
-import fs from 'fs';
+import * as authController from './auth.controller.js';
+import * as userController from './user.controller.js';
 
-const allModules = {};
-
-fs.readFileSync(__dirname + '/').forEach(function (file) {
-  if (file.match(/\.js$/) !== null && file !== 'index.js') {
-    const name = file.replace('.controller.js', '') + 'Controller';
-    allModules[name] = require('./' + file);
-  }
-});
-
-export default allModules;
+export { authController, userController };
