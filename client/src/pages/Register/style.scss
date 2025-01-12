@@ -1,0 +1,134 @@
+.register-form  {
+  width: 30%;
+  height: 65%;
+  min-width: 400px;
+  min-height: 520px;
+  box-sizing: border-box;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+
+  .title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      padding-bottom: 40px;
+  }
+
+  .form {
+    width: 100%;
+
+    .wrap-input {
+      display: block;
+      position: relative;
+      width: 100%;
+      border-bottom: 2px solid #d9d9d9;
+      margin-bottom: 15px;
+
+      .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #333333;
+      line-height: 1.5;
+      padding-left: 7px;
+      text-align: left;
+      } 
+
+      .form-control {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #333333;
+      line-height: 1.2;
+      width: 100%;
+      height: 40px;
+      background-color: transparent;
+      padding: 0 7px 0 43px;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: #adadad;
+      }
+
+      &:focus::placeholder {
+        color: transparent;
+      }
+      }
+
+      .form-focus {
+      position: absolute;
+      display: flex;
+      width: 100%;
+      height: calc(100% - 20px);
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+
+      .icon {
+        color: #adadad;
+        font-size: 1rem;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        position: absolute;
+        padding-left: 13px;
+        padding-top: 3px;
+      }
+      }
+
+      .form-focus::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: rgb(85 200 244);
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+      }
+
+      .form-control:focus + .form-focus::before {
+        width: 100%;
+      }
+
+      .form-control:focus + .form-focus > .icon {
+        color:  rgb(85 200 244);
+      }
+    }
+
+    .form-btn {
+      width: 100%;
+      background-image: var(--gradient-color);
+      border: none;
+      border-radius: 20px;
+      transition: all 1s;
+
+      &:hover {
+        background-image: linear-gradient(45deg, rgba(188,186,230,1) 0%, rgba(0,212,255,1) 100%, rgba(2,0,36,1) 0%);
+      }
+    }
+  }
+
+  .login-btn {
+    padding: 25px 0;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 300;
+
+    .redirect {
+      color: rgb(85 200 244);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

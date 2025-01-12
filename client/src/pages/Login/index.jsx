@@ -1,27 +1,27 @@
 import { Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 import './style.scss';
 
 const Login = () => {
   return (
     <>
-      <div className="login">
+      <div className="login-form">
         <span className="title gradient-text">Login</span>
         <form className="form">
           <div className="wrap-input">
-            <label htmlFor="username" className="form-label">
-              Username
+            <label htmlFor="email" className="form-label">
+              Email
             </label>
             <input
               type="text"
               className="form-control"
-              id="username"
-              placeholder="Type your username"
+              id="email"
+              placeholder="Type your email"
             />
             <span className="form-focus">
-              <FontAwesomeIcon icon={faUser} className="icon" />
+              <FontAwesomeIcon icon={faEnvelope} className="icon" />
             </span>
           </div>
           <div className="wrap-input">
@@ -42,10 +42,10 @@ const Login = () => {
             LOGIN
           </button>
         </form>
-        <div className="register">
+        <div className="register-btn">
           <span>Don{"'"}t have an account? </span>
           <Link to="/register">
-            <span className="redirect">Create </span>
+            <span className="redirect">Create</span>
           </Link>
         </div>
       </div>
