@@ -33,6 +33,7 @@ const configClient = [
         'warn',
         { allowConstantExport: true },
       ],
+      'no-unused-vars': 'off',
     },
   },
 ];
