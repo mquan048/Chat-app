@@ -10,7 +10,11 @@ const configClient = [
     files: ['client/**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2022,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        process: 'readonly',
+        console: 'readonly',
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -33,6 +37,7 @@ const configClient = [
         'warn',
         { allowConstantExport: true },
       ],
+      'react/prop-types': 'off',
       'no-unused-vars': 'off',
     },
   },

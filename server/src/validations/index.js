@@ -1,3 +1,1 @@
-import * as userValidation from './user.validation.js';
-
-export { userValidation };
+export * as userValidation from './user.validation.js';

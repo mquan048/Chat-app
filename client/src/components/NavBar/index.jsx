@@ -7,7 +7,7 @@ import './style.scss';
 const NavBar = () => {
   return (
     <>
-      <navbar className="navbar">
+      <div className="navbar">
         <div className="container">
           <Link to="/">
             <div className="logo">
@@ -17,7 +17,7 @@ const NavBar = () => {
           </Link>
           <Link to="/login">Login</Link>
         </div>
-      </navbar>
+      </div>
     </>
   );
 };

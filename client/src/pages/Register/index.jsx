@@ -1,10 +1,31 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faEnvelope,
+  faLock,
+  faEye,
+  faEyeSlash,
+} from '@fortawesome/free-solid-svg-icons';
 
 import './style.scss';
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isEmailExist, setIsEmailExist] = useState(false);
+
+  const checkIsEmailExist = () => {};
+
+  const handleSubmit = () => {};
+
   return (
     <>
       <div className="register-form">
@@ -19,6 +40,10 @@ const Register = () => {
               className="form-control"
               id="name"
               placeholder="Type your name"
+              value={formData.name}
+              onChange={(event) =>
+                setFormData({ ...formData, name: event.target.value })
+              }
             />
             <span className="form-focus">
               <FontAwesomeIcon icon={faUser} className="icon" />
@@ -33,6 +58,11 @@ const Register = () => {
               className="form-control"
               id="email"
               placeholder="Type your email"
+              value={formData.email}
+              onChange={(event) =>
+                setFormData({ ...formData, email: event.target.value })
+              }
+              onBlur={checkIsEmailExist}
             />
             <span className="form-focus">
               <FontAwesomeIcon icon={faEnvelope} className="icon" />
@@ -43,13 +73,22 @@ const Register = () => {
               Password
             </label>
             <input
-              type="password"
+              type={isShowPassword ? 'text' : 'password'}
               className="form-control"
               id="password"
               placeholder="Type your password"
+              value={formData.password}
+              onChange={(event) =>
+                setFormData({ ...formData, password: event.target.value })
+              }
             />
             <span className="form-focus">
               <FontAwesomeIcon icon={faLock} className="icon" />
+              <FontAwesomeIcon
+                icon={isShowPassword ? faEyeSlash : faEye}
+                className="showPassword"
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              />
             </span>
           </div>
           <div className="wrap-input">
@@ -57,17 +96,29 @@ const Register = () => {
               Confirm Password
             </label>
             <input
-              type="password"
+              type={isShowPassword ? 'text' : 'password'}
               className="form-control"
               id="confirmPassword"
               placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  confirmPassword: event.target.value,
+                })
+              }
             />
             <span className="form-focus">
               <FontAwesomeIcon icon={faLock} className="icon" />
+              <FontAwesomeIcon
+                icon={isShowPassword ? faEyeSlash : faEye}
+                className="showPassword"
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              />
             </span>
           </div>
           <button type="submit" className="form-btn">
-            LOGIN
+            REGISTER
           </button>
         </form>
         <div className="login-btn">
