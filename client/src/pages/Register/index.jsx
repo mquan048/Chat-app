@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
@@ -8,10 +8,15 @@ import {
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../hooks';
+import toast from 'react-hot-toast';
 
 import './style.scss';
 
 const Register = () => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,11 +25,37 @@ const Register = () => {
   });
 
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isEmailExist, setIsEmailExist] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const checkIsEmailExist = () => {};
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setErrorMessage('Missing some fields');
+    } else if (formData.password != formData.confirmPassword) {
+      setErrorMessage('The password and the confirm password are not match');
+    } else {
+      try {
+        await register({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
+        toast.success('Register account succeed!');
+        setErrorMessage(null);
+        navigate('/login');
+      } catch (error) {
+        setErrorMessage(error.response.data.message);
+        console.error(error.response.data.message);
+      }
+    }
+  };
 
   return (
     <>
@@ -117,7 +148,12 @@ const Register = () => {
               />
             </span>
           </div>
-          <button type="submit" className="form-btn">
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button
+            type="submit"
+            className="form-btn"
+            onClick={(event) => handleSubmit(event)}
+          >
             REGISTER
           </button>
         </form>

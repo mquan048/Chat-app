@@ -13,10 +13,15 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: 'The email is invalid' });
     }
     if (await userService.getByEmail(req.body.email)) {
-      return res.status(404).json({ message: 'The email has existed' });
+      return res.status(400).json({ message: 'The email has existed' });
     }
     if (!userValidation.validPassword(req.body.password)) {
-      return res.status(400).json({ message: 'The password is too weak' });
+      return res
+        .status(400)
+        .json({
+          message:
+            'The password is too weak. It must have at least a lowercase, an uppercase and a number',
+        });
     }
     const hashPassword = await authService.hashPassword(req.body.password);
     const user = await userService.create({

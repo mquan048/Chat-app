@@ -122,6 +122,11 @@
       }
     }
 
+    .error-message {
+      color: red;
+      font-weight: 400;
+    }
+
     .form-btn {
       width: 100%;
       background-image: var(--gradient-color);

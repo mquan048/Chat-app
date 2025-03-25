@@ -1,4 +1,4 @@
-import { createContext, useCallback, useLayoutEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import api from '../utils/api';
@@ -18,9 +18,6 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (data) => {
       const response = await api.post('/api/auth/login', data);
-      if (response.status !== 200) {
-        throw new Error(response.data.message);
-      }
       const user = response.data.data;
       setIsLogged(true);
       setUser({
@@ -34,7 +31,11 @@ const AuthProvider = ({ children }) => {
     [navigate]
   );
 
-  useLayoutEffect(() => {
+  const register = useCallback(async (data) => {
+    await api.post('/api/auth/register', data);
+  }, []);
+
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       api
@@ -59,7 +60,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogged, user, login }}>
+    <AuthContext.Provider value={{ isLogged, user, login, register }}>
       {children}
     </AuthContext.Provider>
   );

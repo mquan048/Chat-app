@@ -8,6 +8,7 @@
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+  align-self: center;
 
   .title {
     text-align: center;
@@ -120,6 +121,11 @@
       .form-control:focus + .form-focus > .icon {
         color:  rgb(85 200 244);
       }
+    }
+
+    .error-message {
+      color: red;
+      font-weight: 400;
     }
 
     .form-btn {

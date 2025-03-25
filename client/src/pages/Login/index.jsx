@@ -1,5 +1,5 @@
-import { useLayoutEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -7,36 +7,35 @@ import {
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
-
+import toast from 'react-hot-toast';
 import { useAuth } from '../../hooks';
 
 import './style.scss';
 
 const Login = () => {
-  const navigate = useNavigate();
-
-  const { isLogged, login } = useAuth();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  useLayoutEffect(() => {
-    if (isLogged) {
-      navigate('/home');
-    }
-  }, [isLogged, navigate]);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      login({
-        email: email,
-        password: password,
-      });
-    } catch (error) {
-      //handle login error
-      console.error(error);
+    if (!email || !password) {
+      setErrorMessage('Missing some fields');
+    } else {
+      try {
+        await login({
+          email: email,
+          password: password,
+        });
+        toast.success('Login succeed!');
+        setErrorMessage(null);
+      } catch (error) {
+        setErrorMessage('Email or password are incorrect');
+        console.error(error.response.data.message);
+      }
     }
   };
 
@@ -82,6 +81,7 @@ const Login = () => {
               />
             </span>
           </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button className="form-btn" onClick={(event) => handleSubmit(event)}>
             LOGIN
           </button>
