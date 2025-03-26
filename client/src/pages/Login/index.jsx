@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import toast from 'react-hot-toast';
+import { useAuth } from '../../hooks';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -7,8 +10,6 @@ import {
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
-import toast from 'react-hot-toast';
-import { useAuth } from '../../hooks';
 
 import './style.scss';
 

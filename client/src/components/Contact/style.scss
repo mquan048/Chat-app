@@ -1,0 +1,47 @@
+.contact-warp {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  cursor: pointer;
+
+  .avatar {
+    padding: 12px;
+    margin-left: 10px;
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+  }
+
+  .contact-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .name {
+      color: #333;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .last-message {
+      color: #333;
+      font-size: 0.75rem;
+      font-weight: 300;
+    }
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.selected {
+  background-color: #dde5e8;
+  cursor: unset;
+}

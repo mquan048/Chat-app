@@ -5,13 +5,14 @@ import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 
 import './App.css';
+import Home from './pages/Home';
 
 const App = () => {
   return (
     <>
       <Toaster />
       <NavBar />
-      <Routes>
+      {/* <Routes>
         {routes.map((route, index) => {
           const Page = route.component;
           return <Route key={index} path={route.path} element={Page} />;
@@ -25,7 +26,8 @@ const App = () => {
             />
           );
         })}
-      </Routes>
+      </Routes> */}
+      <Home />
     </>
   );
 };

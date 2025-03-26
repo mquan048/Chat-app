@@ -21,3 +21,21 @@ body {
   background-clip: text;
 }
 
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Độ rộng thanh scroll */
+  border-radius: 8px; /* Bo tròn */
+}
+
+/* Thanh cuộn track (background của scrollbar) */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 8px;
+}
+
+/* Thanh cuộn thumb (phần di chuyển) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Màu nền */
+  border-radius: 8px;
+}
