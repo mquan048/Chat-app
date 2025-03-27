@@ -12,7 +12,7 @@ const App = () => {
     <>
       <Toaster />
       <NavBar />
-      {/* <Routes>
+      <Routes>
         {routes.map((route, index) => {
           const Page = route.component;
           return <Route key={index} path={route.path} element={Page} />;
@@ -26,8 +26,8 @@ const App = () => {
             />
           );
         })}
-      </Routes> */}
-      <Home />
+      </Routes>
+      {/* <Home /> */}
     </>
   );
 };

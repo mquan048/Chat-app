@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (data) => {
       const response = await api.post('/api/auth/login', data);
-      const user = response.data.data;
+      const user = response.data;
       setIsLogged(true);
       setUser({
         name: user.name,
@@ -39,12 +39,12 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       api
-        .get('/api/auth/verify', token)
+        .get('/api/auth/verify')
         .then((response) => {
           setIsLogged(true);
           setUser({
-            name: response.data.data.name,
-            email: response.data.data.email,
+            name: response.data.name,
+            email: response.data.email,
             token: token,
           });
         })

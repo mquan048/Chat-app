@@ -8,6 +8,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import './style.scss';
 import ChatBox from '../../components/ChatBox';
+import apis from '../../utils/api';
 
 const contactListMockData = [
   {
@@ -26,18 +27,23 @@ const contactListMockData = [
   },
 ];
 
+const avatar =
+  'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
+
 const Home = () => {
   const [listContact, setListContact] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
 
   useEffect(() => {
-    setListContact(contactListMockData);
-    setSelectedContact(contactListMockData[0]);
+    apis.get('/api/contact').then((response) => {
+      setListContact(response.data);
+      setSelectedContact(response.data[0]);
+    });
   }, []);
 
   const handleChangeContact = useCallback(
     (id) => {
-      setSelectedContact(listContact.find((contact) => contact.id == id));
+      setSelectedContact(listContact.find((contact) => contact.chatId == id));
     },
     [listContact]
   );
@@ -52,14 +58,14 @@ const Home = () => {
           </span>
         </div>
         <div className="contact-list">
-          {listContact.map((contact) => (
+          {listContact.map((contact, index) => (
             <Contact
-              key={contact.id}
-              id={contact.id}
+              key={index}
+              id={contact.chatId}
               name={contact.name}
               lastMessage={contact.lastMessage}
-              urlAvatar={contact.avatar}
-              selectedId={selectedContact.id}
+              urlAvatar={avatar}
+              selectedId={selectedContact.chatId}
               onClick={handleChangeContact}
             />
           ))}
@@ -67,7 +73,10 @@ const Home = () => {
       </div>
       <div className="chat-warp">
         <ChatBoxHeader contactInfo={selectedContact} />
-        <ChatBox contactId={selectedContact?.id} />
+        <ChatBox
+          chatId={selectedContact?.chatId}
+          contactId={selectedContact?.userId}
+        />
       </div>
     </div>
   );

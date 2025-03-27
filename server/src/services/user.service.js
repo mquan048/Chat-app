@@ -1,4 +1,5 @@
 import db from '../configs/db.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getById = async (id) => {
   const users = await db.execute('SELECT * FROM users WHERE id = ?', [id]);
@@ -18,9 +19,14 @@ export const getByEmail = async (email) => {
 };
 
 export const create = async (user) => {
-  const result = await db.execute(
-    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-    [user.name, user.email, user.password]
-  );
+  const id = uuidv4();
+  const query =
+    'INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?)';
+  const result = await db.execute(query, [
+    id,
+    user.name,
+    user.email,
+    user.password,
+  ]);
   return result[0].insertId;
 };

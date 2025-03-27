@@ -16,12 +16,10 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: 'The email has existed' });
     }
     if (!userValidation.validPassword(req.body.password)) {
-      return res
-        .status(400)
-        .json({
-          message:
-            'The password is too weak. It must have at least a lowercase, an uppercase and a number',
-        });
+      return res.status(400).json({
+        message:
+          'The password is too weak. It must have at least a lowercase, an uppercase and a number',
+      });
     }
     const hashPassword = await authService.hashPassword(req.body.password);
     const user = await userService.create({
@@ -29,8 +27,7 @@ export const register = async (req, res) => {
       password: hashPassword,
     });
     return res.status(201).json({
-      message: 'User created',
-      data: { userId: user },
+      userId: user,
     });
   } catch (error) {
     console.error(error.message);
@@ -56,8 +53,9 @@ export const login = async (req, res) => {
     }
     const token = authService.generateToken(user);
     return res.status(200).json({
-      message: 'User logged in',
-      data: { name: user.name, email: user.email, token: token },
+      name: user.name,
+      email: user.email,
+      token: token,
     });
   } catch (error) {
     console.error(error.message);
@@ -81,11 +79,8 @@ export const verify = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: 'OK!',
-        data: {
-          name: user.name,
-          email: user.email,
-        },
+        name: user.name,
+        email: user.email,
       });
     }
   } catch (error) {

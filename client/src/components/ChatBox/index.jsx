@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import apis from '../../utils/api';
 
 const mockData = [
   {
@@ -27,7 +28,7 @@ const Message = ({ content, isByUser }) => {
   );
 };
 
-const ChatBox = ({ contactId }) => {
+const ChatBox = ({ chatId, contactId }) => {
   const [listMessage, setListMessage] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -46,8 +47,10 @@ const ChatBox = ({ contactId }) => {
   };
 
   useEffect(() => {
-    setListMessage(mockData);
-  }, []);
+    apis.get(`/api/message/${chatId}`).then((response) => {
+      setListMessage(response.data);
+    });
+  }, [chatId]);
 
   return (
     <>
@@ -55,7 +58,7 @@ const ChatBox = ({ contactId }) => {
         {listMessage.map((message, index) => (
           <Message
             key={index}
-            content={message.content}
+            content={message.message}
             isByUser={message.senderId != contactId}
           />
         ))}
