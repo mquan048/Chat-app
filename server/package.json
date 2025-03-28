@@ -8,7 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "author": "",
+  "author": "mquan048",
   "license": "MIT",
   "description": "",
   "dependencies": {
@@ -17,7 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.12.0",
+    "pg": "^8.14.1",
     "uuid": "^11.1.0",
     "validator": "^13.12.0"
   },

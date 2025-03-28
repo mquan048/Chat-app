@@ -1,4 +1,4 @@
-import db from '../configs/db.js';
+import * as db from '../configs/db.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export const getAll = async (userId) => {
@@ -9,7 +9,7 @@ export const getAll = async (userId) => {
         SELECT c.id AS chatId, MAX(m.createAt) AS createAt
 	        FROM chats c 
 	        JOIN messages m ON m.chatId = c.id
-	        WHERE ? IN (c.userId1, c.userId2)
+	        WHERE $1 IN (c.userId1, c.userId2)
 	        GROUP BY c.id 
         ) AS lstm
         ON m.chatId = lstm.chatId AND m.createAt = lstm.createAt
@@ -17,25 +17,26 @@ export const getAll = async (userId) => {
         ON c.id = m.chatId
       JOIN users u
         ON u.id IN (c.userId1, c.userId2)
-      WHERE NOT u.id = ?
+      WHERE NOT u.id = $1
   `;
-  const chats = await db.execute(query, [userId, userId]);
-  return chats[0];
+  const chats = await db.query(query, [userId]);
+  return chats.rows;
 };
 
 export const create = async (userId1, userId2) => {
   const id = uuidv4();
-  const query = 'INSERT INTO chats (id, userId1, userId2) VALUES (?, ?, ?)';
-  const result = await db.execute(query, [
+  const query = 'INSERT INTO chats (id, userId1, userId2) VALUES ($1, $2, $3)';
+  const result = await db.query(query, [
     id,
     Math.min(userId1, userId2),
     Math.max(userId1, userId2),
   ]);
-  return result[0].insertId;
+  return result;
 };
 
 export const checkUserInChat = async (chatId, userId) => {
-  const query = 'SELECT * FROM chats WHERE id = ? AND ? IN (userId1, userId2)';
-  const result = await db.execute(query, [chatId, userId]);
-  return result[0][0];
+  const query =
+    'SELECT * FROM chats WHERE id = $1 AND $2 IN (userId1, userId2)';
+  const result = await db.query(query, [chatId, userId]);
+  return result.rows[0];
 };

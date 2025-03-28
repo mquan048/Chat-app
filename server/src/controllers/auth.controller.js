@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     if (!userValidation.validPassword(req.body.password)) {
       return res.status(400).json({
         message:
-          'The password is too weak. It must have at least a lowercase, an uppercase and a number',
+          'The password is too weak. It must have at least 8 letter, a lowercase, an uppercase and a number',
       });
     }
     const hashPassword = await authService.hashPassword(req.body.password);
