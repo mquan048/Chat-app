@@ -12,5 +12,13 @@ export const getMessages = async (req, res) => {
   }
 
   const messages = await messageService.getFirst(req.params.chatId);
-  return res.status(200).json(messages);
+  return res.status(200).json(
+    messages.map((message) => ({
+      id: message.id,
+      message: message.message,
+      senderId: message.senderid,
+      chatId: message.chatid,
+      createAt: message.createat,
+    }))
+  );
 };

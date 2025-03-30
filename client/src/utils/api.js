@@ -1,11 +1,14 @@
 import axios from 'axios';
-import { useAuth } from '../hooks';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-const token = localStorage.getItem('token');
+
+const getToken = () => {
+  return localStorage.getItem('token');
+};
 
 const apis = {
   get: async (pathUrl) => {
+    const token = getToken();
     if (token) {
       const response = await axios.get(`${SERVER_URL}${pathUrl}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -18,6 +21,7 @@ const apis = {
   },
 
   post: async (pathUrl, body) => {
+    const token = getToken();
     if (token) {
       const response = await axios.post(`${SERVER_URL}${pathUrl}`, body, {
         headers: { Authorization: `Bearer ${token}` },
@@ -30,6 +34,7 @@ const apis = {
   },
 
   put: async (pathUrl, body) => {
+    const token = getToken();
     if (token) {
       const response = await axios.put(`${SERVER_URL}${pathUrl}`, body, {
         headers: { Authorization: `Bearer ${token}` },
@@ -42,6 +47,7 @@ const apis = {
   },
 
   del: async (pathUrl) => {
+    const token = getToken();
     if (token) {
       const response = await axios.delete(`${SERVER_URL}${pathUrl}`, {
         headers: { Authorization: `Bearer ${token}` },

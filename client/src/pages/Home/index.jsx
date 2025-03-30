@@ -1,52 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useContact } from '../../hooks';
 
 import Contact from '../../components/Contact';
+import ChatBox from '../../components/ChatBox';
 import ChatBoxHeader from './../../components/ChatBoxHeader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import './style.scss';
-import ChatBox from '../../components/ChatBox';
-import apis from '../../utils/api';
-
-const contactListMockData = [
-  {
-    id: '1',
-    name: 'User 1',
-    avatar:
-      'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
-    lastMessage: 'Hello',
-  },
-  {
-    id: '2',
-    name: 'User 2',
-    avatar:
-      'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
-    lastMessage: 'Goodbye',
-  },
-];
+import { MessageProvider } from '../../contexts/MessageContext';
 
 const avatar =
   'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
 
 const Home = () => {
-  const [listContact, setListContact] = useState([]);
-  const [selectedContact, setSelectedContact] = useState(null);
-
-  useEffect(() => {
-    apis.get('/api/contact').then((response) => {
-      setListContact(response.data);
-      setSelectedContact(response.data[0]);
-    });
-  }, []);
-
-  const handleChangeContact = useCallback(
-    (id) => {
-      setSelectedContact(listContact.find((contact) => contact.chatId == id));
-    },
-    [listContact]
-  );
+  const { listContact, selectedContact, changeFocusContact } = useContact();
 
   return (
     <div className="content-warp">
@@ -66,17 +34,16 @@ const Home = () => {
               lastMessage={contact.lastMessage}
               urlAvatar={avatar}
               selectedId={selectedContact.chatId}
-              onClick={handleChangeContact}
+              onClick={changeFocusContact}
             />
           ))}
         </div>
       </div>
       <div className="chat-warp">
         <ChatBoxHeader contactInfo={selectedContact} />
-        <ChatBox
-          chatId={selectedContact?.chatId}
-          contactId={selectedContact?.userId}
-        />
+        <MessageProvider chatId={selectedContact?.chatId}>
+          <ChatBox />
+        </MessageProvider>
       </div>
     </div>
   );

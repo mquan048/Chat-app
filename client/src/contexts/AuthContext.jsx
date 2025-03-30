@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import socket from '../utils/socket';
 
 import api from '../utils/api';
 
@@ -13,23 +14,18 @@ const AuthProvider = ({ children }) => {
     token: null,
   });
 
-  const navigate = useNavigate();
-
-  const login = useCallback(
-    async (data) => {
-      const response = await api.post('/api/auth/login', data);
-      const user = response.data;
-      setIsLogged(true);
-      setUser({
-        name: user.name,
-        email: user.email,
-        token: user.token,
-      });
-      localStorage.setItem('token', user.token);
-      navigate('/home');
-    },
-    [navigate]
-  );
+  const login = useCallback(async (data) => {
+    const response = await api.post('/api/auth/login', data);
+    setUser({
+      userId: response.data.userId,
+      name: response.data.name,
+      email: response.data.email,
+      token: response.data.token,
+    });
+    localStorage.setItem('token', response.data.token);
+    socket.connect(response.data.userId);
+    setIsLogged(true);
+  }, []);
 
   const register = useCallback(async (data) => {
     await api.post('/api/auth/register', data);
@@ -41,22 +37,29 @@ const AuthProvider = ({ children }) => {
       api
         .get('/api/auth/verify')
         .then((response) => {
-          setIsLogged(true);
           setUser({
+            userId: response.data.userId,
             name: response.data.name,
             email: response.data.email,
             token: token,
           });
+          socket.connect(response.data.userId);
+          setIsLogged(true);
         })
         .catch((error) => {
-          setIsLogged(false);
           setUser({
+            userId: null,
             name: null,
             email: null,
             token: null,
           });
+          setIsLogged(false);
         });
     }
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (

@@ -1,3 +1,4 @@
+import { ContactProvider } from '../contexts/ContactContext';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -8,7 +9,9 @@ export const routes = [
     path: '/',
     component: (
       <ProtectedRoute>
-        <Home />
+        <ContactProvider>
+          <Home />
+        </ContactProvider>
       </ProtectedRoute>
     ),
   },

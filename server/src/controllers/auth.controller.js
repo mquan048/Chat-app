@@ -53,6 +53,7 @@ export const login = async (req, res) => {
     }
     const token = authService.generateToken(user);
     return res.status(200).json({
+      userId: user.id,
       name: user.name,
       email: user.email,
       token: token,
@@ -79,6 +80,7 @@ export const verify = async (req, res) => {
       });
     } else {
       return res.status(200).json({
+        userId: user.id,
         name: user.name,
         email: user.email,
       });

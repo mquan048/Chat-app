@@ -12,7 +12,7 @@
     "start": "concurrently \"npm start --prefix server\" \"npm start --prefix client\"",
     "prepare": "husky"
   },
-  "author": "",
+  "author": "mquan048",
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.17.0",

@@ -35,7 +35,7 @@ const Login = () => {
         setErrorMessage(null);
       } catch (error) {
         setErrorMessage('Email or password are incorrect');
-        console.error(error.response.data.message);
+        console.error(error);
       }
     }
   };

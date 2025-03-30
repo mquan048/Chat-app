@@ -1,24 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useAuth, useMessage } from '../../hooks';
+import { MessageProvider } from '../../contexts/MessageContext';
 
-import './style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import apis from '../../utils/api';
 
-const mockData = [
-  {
-    content: 'Hello',
-    senderId: '1',
-  },
-  {
-    content: 'Hi',
-    senderId: '5',
-  },
-  {
-    content: 'Hi',
-    senderId: '5',
-  },
-];
+import './style.scss';
 
 const Message = ({ content, isByUser }) => {
   return (
@@ -28,29 +14,9 @@ const Message = ({ content, isByUser }) => {
   );
 };
 
-const ChatBox = ({ chatId, contactId }) => {
-  const [listMessage, setListMessage] = useState([]);
-  const [message, setMessage] = useState('');
-
-  const handleSendMessage = () => {
-    if (message) {
-      //Send message
-      setListMessage([
-        {
-          content: message,
-          userId: 5,
-        },
-        ...listMessage,
-      ]);
-      setMessage('');
-    }
-  };
-
-  useEffect(() => {
-    apis.get(`/api/message/${chatId}`).then((response) => {
-      setListMessage(response.data);
-    });
-  }, [chatId]);
+const ChatBox = () => {
+  const { listMessage, message, setMessage, sendMessage } = useMessage();
+  const { user } = useAuth();
 
   return (
     <>
@@ -59,7 +25,7 @@ const ChatBox = ({ chatId, contactId }) => {
           <Message
             key={index}
             content={message.message}
-            isByUser={message.senderId != contactId}
+            isByUser={message.senderId == user.userId}
           />
         ))}
       </div>
@@ -75,7 +41,7 @@ const ChatBox = ({ chatId, contactId }) => {
           className="send-btn"
           icon={faPaperPlane}
           size="2x"
-          onClick={handleSendMessage}
+          onClick={sendMessage}
         />
       </div>
     </>

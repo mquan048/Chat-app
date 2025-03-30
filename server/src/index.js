@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { testConnection } from './configs/db.js';
 import { initRoutes } from './routes/index.js';
+import { socketServer } from './configs/socket.js';
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ initRoutes(app);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log('Server is running on port: ', PORT);
 });
+
+socketServer(server);
